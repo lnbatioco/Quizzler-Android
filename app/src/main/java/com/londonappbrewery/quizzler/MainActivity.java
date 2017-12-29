@@ -2,16 +2,18 @@ package com.londonappbrewery.quizzler;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
     // TODO: Declare constants here
 
 
-    // TODO: Declare member variables here: (accessible everywhere!)
-        // create a variable that will hold our button so we can access it anywhere
-        Button mTrueButton; // refer to onCreate
+    // TODO: Declare member variables here:
+        Button mTrueButton;
         Button mFalseButton;
 
 
@@ -37,9 +39,25 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTrueButton = (Button) findViewById(R.id.true_button); // convert a view to a button
+        mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
 
+        
+        mTrueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Quizzler", "TRUE button pressed");
+                Toast.makeText(MainActivity.this, "TRUE pressed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mFalseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Quizzler", "FALSE button pressed");
+                Toast.makeText(MainActivity.this, "FALSE pressed!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
