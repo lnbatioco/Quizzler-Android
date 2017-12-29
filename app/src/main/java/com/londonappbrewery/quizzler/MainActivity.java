@@ -2,13 +2,17 @@ package com.londonappbrewery.quizzler;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
     // TODO: Declare constants here
 
 
-    // TODO: Declare member variables here:
+    // TODO: Declare member variables here: (accessible everywhere!)
+        // create a variable that will hold our button so we can access it anywhere
+        Button mTrueButton; // refer to onCreate
+        Button mFalseButton;
 
 
     // TODO: Uncomment to create question bank
@@ -33,6 +37,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mTrueButton = (Button) findViewById(R.id.true_button); // convert a view to a button
+        mFalseButton = (Button) findViewById(R.id.false_button);
 
 
     }
