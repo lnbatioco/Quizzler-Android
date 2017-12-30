@@ -41,7 +41,6 @@ public class MainActivity extends Activity {
     };
 
     // TODO: Declare constants here
-    // progress bar will increment by 8 after every question
     final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / mQuestionBank.length);
 
     @Override
@@ -49,7 +48,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // save state
         if (savedInstanceState != null) {
             mScore = savedInstanceState.getInt("ScoreKey");
             mIndex = savedInstanceState.getInt("IndexKey");
@@ -59,19 +57,16 @@ public class MainActivity extends Activity {
             mIndex = 0;
         }
 
-        // link views
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mScoreTextView = (TextView) findViewById(R.id.score);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        // fetch the first TrueFalse object at the value of mIndex which is 0.
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
         mScoreTextView.setText("Score " + mScore + "/" + mQuestionBank.length);
 
-        // true / false buttons
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +85,7 @@ public class MainActivity extends Activity {
     }
 
     private void updateQuestion() {
-        mIndex = (mIndex + 1) % mQuestionBank.length; // mIndex is currently 0
+        mIndex = (mIndex + 1) % mQuestionBank.length;
 
         if (mIndex == 0){
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -105,7 +100,7 @@ public class MainActivity extends Activity {
             });
             alert.show();
         } else {
-
+            // blank
         }
 
         mQuestion = mQuestionBank[mIndex].getQuestionID();
@@ -129,14 +124,7 @@ public class MainActivity extends Activity {
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
 
-        // first piece of data we save is score
         outState.putInt("ScoreKey", mScore);
-
-        // now we need to store what question the user was on
         outState.putInt("IndexKey", mIndex);
-
-        // we've now stored the info in the Bundle.
-        // tell app to check the bundle when it is being created
-        // refer to onCreate's savedInstanceState if/else conditional
     }
 }
