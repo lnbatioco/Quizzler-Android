@@ -18,6 +18,7 @@ public class MainActivity extends Activity {
         Button mFalseButton;
         TextView mQuestionTextView;
         int mIndex;
+        int mQuestion;
 
 
     // TODO: Create question bank
@@ -47,26 +48,30 @@ public class MainActivity extends Activity {
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
         // fetch the first TrueFalse object at the value of mIndex which is 0.
-        int question = mQuestionBank[mIndex].getQuestionID();
-        mQuestionTextView.setText(question);
+        mQuestion = mQuestionBank[mIndex].getQuestionID();
+        mQuestionTextView.setText(mQuestion);
 
 
         // true / false buttons
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Quizzler", "TRUE button pressed");
-                Toast.makeText(MainActivity.this, "TRUE pressed!", Toast.LENGTH_SHORT).show();
+                updateQuestion();
             }
         });
 
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Quizzler", "FALSE button pressed");
-                Toast.makeText(MainActivity.this, "FALSE pressed!", Toast.LENGTH_SHORT).show();
+                updateQuestion();
             }
         });
+    }
+
+    private void updateQuestion() {
+        mIndex = (mIndex + 1) % mQuestionBank.length; // mIndex is currently 0
+        mQuestion = mQuestionBank[mIndex].getQuestionID();
+        mQuestionTextView.setText(mQuestion);
 
     }
 }
