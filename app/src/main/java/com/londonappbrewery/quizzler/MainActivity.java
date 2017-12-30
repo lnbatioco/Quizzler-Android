@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // save state
         if (savedInstanceState != null) {
             mScore = savedInstanceState.getInt("ScoreKey");
             mIndex = savedInstanceState.getInt("IndexKey");
@@ -58,6 +59,7 @@ public class MainActivity extends Activity {
             mIndex = 0;
         }
 
+        // link views
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -137,5 +139,4 @@ public class MainActivity extends Activity {
         // tell app to check the bundle when it is being created
         // refer to onCreate's savedInstanceState if/else conditional
     }
-
 }
