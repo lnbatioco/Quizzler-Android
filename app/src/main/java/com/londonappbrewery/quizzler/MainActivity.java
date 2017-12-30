@@ -5,20 +5,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    // TODO: Declare constants here
-
-
     // TODO: Declare member variables here:
-        Button mTrueButton;
-        Button mFalseButton;
-        TextView mQuestionTextView;
-        int mIndex;
-        int mQuestion;
+    Button mTrueButton;
+    Button mFalseButton;
+    TextView mQuestionTextView;
+    int mIndex;
+    int mQuestion;
+    TextView mScoreTextView;
+    int mScore;
+    ProgressBar mProgressBar;
+
 
 
     // TODO: Create question bank
@@ -38,6 +40,10 @@ public class MainActivity extends Activity {
             new TrueFalse(R.string.question_13, true)
     };
 
+    // TODO: Declare constants here
+    // progress bar will increment by 8 after every question
+    final int PROGRESS_BAR_INCREMENT = (int) Math.ceil(100.0 / mQuestionBank.length);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +52,8 @@ public class MainActivity extends Activity {
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        mScoreTextView = (TextView) findViewById(R.id.score);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         // fetch the first TrueFalse object at the value of mIndex which is 0.
         mQuestion = mQuestionBank[mIndex].getQuestionID();
@@ -74,16 +82,21 @@ public class MainActivity extends Activity {
         mIndex = (mIndex + 1) % mQuestionBank.length; // mIndex is currently 0
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
-    }
+        mProgressBar.incrementProgressBy(PROGRESS_BAR_INCREMENT);
+        mScoreTextView.setText("Score " + mScore + "/" + mQuestionBank.length);
+    };
 
     private void checkAnswer(boolean userSelection) {
         boolean correctAnswer = mQuestionBank[mIndex].isAnswer();
 
         if (userSelection == correctAnswer){
             Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
+            mScore += 1;
         } else {
             Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 }
