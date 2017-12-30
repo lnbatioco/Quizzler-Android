@@ -23,8 +23,6 @@ public class MainActivity extends Activity {
     int mScore;
     ProgressBar mProgressBar;
 
-
-
     // TODO: Create question bank
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
             new TrueFalse(R.string.question_1, true),
@@ -51,6 +49,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState != null) {
+            mScore = savedInstanceState.getInt("ScoreKey");
+            mIndex = savedInstanceState.getInt("IndexKey");
+
+        } else {
+            mScore = 0;
+            mIndex = 0;
+        }
+
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -60,7 +67,7 @@ public class MainActivity extends Activity {
         // fetch the first TrueFalse object at the value of mIndex which is 0.
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
-
+        mScoreTextView.setText("Score " + mScore + "/" + mQuestionBank.length);
 
         // true / false buttons
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +94,7 @@ public class MainActivity extends Activity {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Game Over");
             alert.setCancelable(false);
-            alert.setMessage("You scored " + mScore + "points!");
+            alert.setMessage("You scored " + mScore + " points!");
             alert.setPositiveButton("Close Application", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -116,6 +123,19 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
 
+        // first piece of data we save is score
+        outState.putInt("ScoreKey", mScore);
+
+        // now we need to store what question the user was on
+        outState.putInt("IndexKey", mIndex);
+
+        // we've now stored the info in the Bundle.
+        // tell app to check the bundle when it is being created
+        // refer to onCreate's savedInstanceState if/else conditional
+    }
 
 }
